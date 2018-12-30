@@ -39,38 +39,41 @@ public class GUIbuilder {
 	private ProjectBestandLader BestandLader;
 
 	// Vaker gebruikte stijl-definities
-	Border randaan = new Border(
+	private final Border randaan = new Border(
 			new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-	Border randuit = new Border(
+	private final Border randuit = new Border(
 			new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
 	// Positionering en styling van het sequencer blok
-	private final int hoogtetussenrijen = 43; // px
+	private final int sequebcerhorizontaal = 30; // px
+	private final int sequencerverticaal = 93; // px
+	private final int hoogtetussenrijen = 33; // px
 	private final int horizontaleafstandtussenstappen = 40; // px
-	private final int startxpos = 30; // px
-	private final int startypos = 120; // px
 	private final int aftsandvanknoptovlabels = 125; // px
 	private int btnx;
 	// einde sequencerblok
 
 	// Positionering en styling startknop
 	private final int startknophorizontaal = 148; // px
-	private final int startknopverticaal = 93; // px
+	private final int startknopverticaal = sequencerverticaal - 23; // px
 	private String afspelen = "Afspelen";
 	private String stoppen = "Stoppen";
 	// einde startknop
 
 	// Positionering en styling BPM-veld
-	private final int bpmverticaal = 93; // px
+	private final int bpmverticaal = startknopverticaal; // px
 	private final int bpmhorizontaal = 347; // px
 
 	// einde BPM-veld;
 
 	// Positionering en styling menubalk
 
-	int menubalkxpos = 0;
-	String labelOpslaan = "Bestand opslaan";
-	String labelOpenen = "Bestand openen";
+	private final int menubalkxpos = 0;
+	private final String labelOpslaan = "Bestand opslaan";
+	private final String labelOpenen = "Bestand openen";
+	
+	private final String bestandOmschrijving = "WSB projecten (*.wsb)";
+	private final String bestandExtensie = "*.wsb";
 
 	// einde menubalk
 
@@ -104,7 +107,7 @@ public class GUIbuilder {
 		root.getChildren().add(opslaan);
 
 		final FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("WSB projecten (*.wsb)", "*.wsb");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(bestandOmschrijving, bestandExtensie);
 		fileChooser.getExtensionFilters().add(extFilter);
 
 		opslaan.setOnAction(new EventHandler<ActionEvent>() {
@@ -254,7 +257,7 @@ public class GUIbuilder {
 
 	public void sequencermaken() {
 
-		int mijnypos = startypos;
+		int mijnypos = sequencerverticaal;
 
 		String stapAan = "aan";
 		String stapUit = "aan";
@@ -265,7 +268,7 @@ public class GUIbuilder {
 			Label spoorlabel = new Label(spoor.getNaam());
 			Label instrumentlabel = new Label(spoor.getOmschrijving());
 
-			spoorlabel.setTranslateX(startxpos);
+			spoorlabel.setTranslateX(sequebcerhorizontaal);
 			spoorlabel.setTranslateY(mijnypos);
 
 			instrumentlabel.setTranslateX(spoorlabel.getTranslateX());
@@ -334,7 +337,7 @@ public class GUIbuilder {
 		Button leegmaken = new Button("Patroon leegmaken");
 		leegmaken.setStyle("-fx-background-color: transparent;");
 		leegmaken.setLayoutX(680);
-		leegmaken.setLayoutY(93);
+		leegmaken.setLayoutY(startknopverticaal);
 		leegmaken.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

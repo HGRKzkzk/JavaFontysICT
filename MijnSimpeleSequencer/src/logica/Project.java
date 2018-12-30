@@ -5,9 +5,6 @@ import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-import persistentie.ProjectBestandLader;
-import persistentie.ProjectBestandSchrijver;
-
 @SuppressWarnings("serial")
 public class Project implements Serializable {
 
@@ -53,8 +50,7 @@ public class Project implements Serializable {
 				volume = stap.getVolume();
 				positie = stap.getMijnplek();
 				midicommand = stap.getMidicommand();	
-				spoor.getTrack()
-						.add(midiHelpers.midiEvent(midicommand, midikanaal, spoor.getInstrument(), volume, positie));
+				spoor.getTrack().add(midiHelpers.midiEvent(midicommand, midikanaal, spoor.getInstrument(), volume, positie));
 
 				
 

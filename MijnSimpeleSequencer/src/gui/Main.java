@@ -59,6 +59,8 @@ public class Main extends Application {
 
 			primaryStage.show();
 
+			
+			// Hoe om te gaan met afsluiten?
 			primaryStage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> {
 				e.consume();
 				Popup popup = new Popup();
@@ -95,7 +97,9 @@ public class Main extends Application {
 		}
 
 	}
-
+	
+	
+	//Daar gaan we dan..!
 	public static void main(String[] args) {
 		launch(args);
 	}
