@@ -5,25 +5,24 @@ import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 
+import persistentie.ProjectBestandLader;
+import persistentie.ProjectBestandSchrijver;
+
 @SuppressWarnings("serial")
 public class Project implements Serializable {
 
 	private transient SimpeleSequencer mijnsequencer;
-
 	private String naam;
-
 	private int bpm;
-	// private int aantaldrumsporen;
-	// private int aantalsynthsporen;
-	ArrayList<Spoor> sporen = new ArrayList<Spoor>(); // als je deze lijst heb, waarom zou je dan na het aanmaken die
-														// sporen nog op een andere manier bijhouden?
+	ArrayList<Spoor> sporen = new ArrayList<Spoor>();
+	
+								
 
 	@SuppressWarnings("unused")
 	public Project(String naam, int bpm, int aantaldrumsporen, int aantalsynthsporen, SimpeleSequencer seq) {
 
 		this.naam = naam;
 		this.bpm = bpm;
-		// this.aantaldrumsporen = aantaldrumsporen;
 		this.mijnsequencer = seq;
 		this.mijnsequencer.setSequencerBPM(bpm);
 
@@ -53,12 +52,10 @@ public class Project implements Serializable {
 				volume = stap.getVolume();
 				positie = stap.getMijnplek();
 				midicommand = stap.getMidicommand();	
-				
-
 				spoor.getTrack()
 						.add(midiHelpers.midiEvent(midicommand, midikanaal, spoor.getInstrument(), volume, positie));
 
-				// System.out.println(stap.getMijnplek() + " // " + stap.maakIkGeluid());
+				
 
 			}
 
@@ -111,7 +108,7 @@ public class Project implements Serializable {
 			try {
 				mijnsequencer.getSequencer().setSequence(mijnsequencer.getSequence());
 			} catch (InvalidMidiDataException e) {
-				// TODO Auto-generated catch block
+				// als de sequence leeg is;
 				e.printStackTrace();
 			}
 			mijnsequencer.getSequencer().start();
