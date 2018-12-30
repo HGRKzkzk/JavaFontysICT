@@ -52,15 +52,8 @@ public class Project implements Serializable {
 			for (Stap stap : spoor.getStappen()) {
 				volume = stap.getVolume();
 				positie = stap.getMijnplek();
-
-				// note on (144) meegeven
-				if (stap.maakIkGeluid()) {
-					midicommand = 144;
-				}
-				// .. anders note off.
-				else {
-					midicommand = 128;
-				}
+				midicommand = stap.getMidicommand();	
+				
 
 				spoor.getTrack()
 						.add(midiHelpers.midiEvent(midicommand, midikanaal, spoor.getInstrument(), volume, positie));

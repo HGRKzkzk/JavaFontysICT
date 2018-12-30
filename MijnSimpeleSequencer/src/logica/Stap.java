@@ -10,13 +10,17 @@ public class Stap implements Serializable {
 	private int mijnplek;
 	private int volume;
 	private boolean maakIkGeluid;
+	private int midicommand = 0;
 	// private Noot noot;
+
+	
 
 	public Stap(ArrayList<Stap> stappen, int mijnplek) {
 		this.hoevaakveranderdeikvanstatus = 0;
 		this.mijnplek = mijnplek + 1;
 		this.setVolume(127);
 		this.maakIkGeluid = false;
+		this.midicommand = 128;
 		stappen.add(this);
 
 	}
@@ -25,8 +29,10 @@ public class Stap implements Serializable {
 
 		if (maakIkGeluid) {
 			maakIkGeluid = false;
+			midicommand = 128;
 		} else {
 			maakIkGeluid = true;
+			midicommand = 144;
 		}
 
 		System.out.println(maakIkGeluid);
@@ -43,6 +49,10 @@ public class Stap implements Serializable {
 
 	public boolean maakIkGeluid() {
 		return maakIkGeluid;
+	}
+	
+	public int getMidicommand() {
+		return midicommand;
 	}
 
 	public int getMijnplek() {
