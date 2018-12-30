@@ -121,7 +121,7 @@ public class Project implements Serializable {
 
 	}
 
-	public void gelaadProjectToepassen(Project geladenproject) {
+	public void geladenProjectToepassen(Project geladenproject) {
 		alleSporenLeegmaken();
 		this.naam = geladenproject.naam;
 		this.bpm = geladenproject.bpm;
