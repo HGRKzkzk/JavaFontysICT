@@ -16,6 +16,7 @@ public class Project implements Serializable {
 	private int bpm;
 	ArrayList<Spoor> sporen = new ArrayList<Spoor>();
 	
+	
 								
 
 	@SuppressWarnings("unused")
@@ -138,9 +139,7 @@ public class Project implements Serializable {
 		this.naam = naam;
 	}
 
-	public void setMijnsequencer(SimpeleSequencer mijnsequencer) {
-		this.mijnsequencer = mijnsequencer;
-	}
+	
 
 	public ArrayList<Spoor> getSporen() {
 		return sporen;
