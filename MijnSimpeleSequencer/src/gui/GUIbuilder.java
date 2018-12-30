@@ -31,21 +31,63 @@ import persistentie.ProjectBestandLader;
 import persistentie.ProjectBestandSchrijver;
 
 public class GUIbuilder {
+	
+	Pane root;
+	Project project;
+	Stage primaryStage;
+	ProjectBestandSchrijver BestandSchrijver;
+	ProjectBestandLader BestandLader;
+	
+	
+	// Vaker gebruikte stijl-definities 
+	Border randaan = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)	);
+	Border randuit = new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY, BorderWidths.DEFAULT));
+	
+	
+	
+	
+	
+	// Positionering van het sequencer blok
+	int hoogtetussenrijen = 43;
+	int horizontaleafstandtussenstappen = 40;
+	int startxpos = 30;
+	int startypos = 120;
+	int aftsandvanknoptovlabels = 125;
+	int btnx;
+	// einde sequencerblok 
+	
+	
+	public GUIbuilder(Pane root, Project project, Stage primaryStage){
+		
+		this.root = root;
+		this.project = project;
+		this.primaryStage = primaryStage;
+		BestandSchrijver = new ProjectBestandSchrijver();
+		BestandLader = new ProjectBestandLader(project);
+		
+		maakmijnGUI();
+		
+		
+	}
 
-	@SuppressWarnings("unused")
-	public static void menubalkmaken(Project project, Pane root, Stage primaryStage) {
+	
+	private void maakmijnGUI() {
+		
+		sequencermaken();
+		bpminvoerveldmaken();
+		menubalkmaken();
+		
+		
+	}
 
-		Border randaan = new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
-		Border randuit = new Border(
-				new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-
-		ProjectBestandSchrijver BestandSchrijver = new ProjectBestandSchrijver();
-		ProjectBestandLader BestandLader = new ProjectBestandLader(project);
+	public void menubalkmaken() {
+		
 
 		int naarrechts = 0;
-
+		
+		
+		//		Knop opslaan 
 		Button opslaan = new Button("Bestand opslaan");
 		opslaan.setTranslateX(naarrechts + 100);
 		opslaan.setStyle("-fx-background-color: transparent;");
@@ -66,6 +108,7 @@ public class GUIbuilder {
 			}
 		});
 
+		//		Knop laden
 		Button laden = new Button("Bestand openen");
 		laden.setTranslateX(naarrechts);
 		laden.setStyle("-fx-background-color: transparent;");
@@ -112,13 +155,15 @@ public class GUIbuilder {
 					}
 
 				}
-
-				root.getChildren().clear();
-				Sporenenstappenmaken(root, project, primaryStage);
+				
+				GUIopnieuwbouwen();
+				
 
 			}
 		});
 
+		
+		// Knop exporteren naar midi 
 		Button midi = new Button("Midi exporteren");
 		midi.setTranslateX(naarrechts + 200);
 		midi.setStyle("-fx-background-color: transparent;");
@@ -146,8 +191,9 @@ public class GUIbuilder {
 		root.getChildren().add(info);
 
 	}
+	
 
-	public static void bpminvoer(Project project, Pane root, Stage primaryStage) {
+	public void bpminvoerveldmaken() {
 
 		int bpmverticaal = 93;
 		int bpmhorizontaal = 347;
@@ -206,20 +252,7 @@ public class GUIbuilder {
 
 	}
 
-	public static void Sporenenstappenmaken(Pane root, Project project, Stage primaryStage) {
-
-		Border randaan = new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-
-		Border randuit = new Border(
-				new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY, BorderWidths.DEFAULT));
-
-		int hoogtetussenrijen = 43;
-		int horizontaleafstandtussenstappen = 40;
-		int startxpos = 30;
-		int startypos = 120;
-		int aftsandvanknoptovlabels = 125;
-		int btnx;
+	public void sequencermaken() {
 
 		String stapAan = "aan";
 		String stapUit = "aan";
@@ -323,9 +356,17 @@ public class GUIbuilder {
 		root.getChildren().add(leegmaken);
 
 		startknopmaken(project, root);
-		bpminvoer(project, root, primaryStage);
-		menubalkmaken(project, root, primaryStage);
+		
+		
 		primaryStage.setTitle("HGRKzkzkboxx - " + project.getNaam());
 	}
+	
+	
+	public void GUIopnieuwbouwen() {
+		root.getChildren().clear();
+		maakmijnGUI();
+	}
+	
+	
 
 }

@@ -27,6 +27,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class Main extends Application {
+	
+	int	horizontaleresolutie = 880;
+	int verticaleresolutie = 640; 
+	
 	SimpeleSequencer mijnsequencer = new SimpeleSequencer();
 	Project project = new Project("Nieuw project", 120, 6, 0, mijnsequencer);
 
@@ -38,13 +42,17 @@ public class Main extends Application {
 		try {
 
 			Pane root = new Pane();
-			Scene scene = new Scene(root, 880, 640);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Scene scene = new Scene(root, horizontaleresolutie, verticaleresolutie);
 
+			@SuppressWarnings("unused")
+			GUIbuilder mijnGUI= new GUIbuilder(root, project, primaryStage); 
+			
+			
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("HGRKzkzkboxx - " + project.getNaam());
 			primaryStage.getIcons().add(new Image("file:Music.png"));
 
-			GUIbuilder.Sporenenstappenmaken(root, project, primaryStage);
+			
 
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
@@ -92,8 +100,6 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	public static void sporenenstappen() {
 
-	}
 
 }
