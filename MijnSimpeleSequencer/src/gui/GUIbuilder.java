@@ -91,14 +91,14 @@ public class GUIbuilder {
 
 	private void maakmijnGUI() {
 
-		sequencermaken();
-		bpminvoerveldmaken();
-		menubalkmaken();
-		startknopmaken();
+		sequencerMaken();
+		bpmInvoerVeldMaken();
+		menubalkMaken();
+		startknopMaken();
 
 	}
 
-	public void menubalkmaken() {
+	public void menubalkMaken() {
 
 		// Knop opslaan
 		Button opslaan = new Button(labelOpslaan);
@@ -203,7 +203,7 @@ public class GUIbuilder {
 
 	}
 
-	public void bpminvoerveldmaken() {
+	public void bpmInvoerVeldMaken() {
 
 		TextField bpmveld = new TextField();
 		String bpm = String.valueOf(project.getMijnsequencer().getSequencer().getTempoInBPM());
@@ -218,7 +218,7 @@ public class GUIbuilder {
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
 					float ingevoerdewaarde = Float.valueOf(bpmveld.getText());
-					project.bpminstellen(ingevoerdewaarde);
+					project.tempoBepalen(ingevoerdewaarde);
 					System.out.println(project.getMijnsequencer().getSequencer().getTempoInBPM());
 					String nieuwebpm = String.valueOf(project.getMijnsequencer().getSequencer().getTempoInBPM());
 					bpmveld.setText(nieuwebpm);
@@ -228,7 +228,7 @@ public class GUIbuilder {
 
 	}
 
-	public void startknopmaken() {
+	public void startknopMaken() {
 
 		Button startknop = new Button();
 		startknop.setTranslateX(startknophorizontaal);
@@ -255,7 +255,7 @@ public class GUIbuilder {
 
 	}
 
-	public void sequencermaken() {
+	public void sequencerMaken() {
 
 		int mijnypos = sequencerverticaal;
 
@@ -342,7 +342,7 @@ public class GUIbuilder {
 			@Override
 			public void handle(ActionEvent e) {
 
-				project.allesporenleegmaken();
+				project.alleSporenLeegmaken();
 
 				for (Node node : root.getChildren()) {
 					if (node instanceof Button && node.getId() == "stap") {

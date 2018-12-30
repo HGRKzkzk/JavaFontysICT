@@ -60,12 +60,12 @@ public class Project implements Serializable {
 
 	}
 
-	public void allesporenleegmaken() {
+	public void alleSporenLeegmaken() {
 
 		for (Spoor spoor : sporen) {
 			mijnsequencer.getSequence().deleteTrack(spoor.getTrack());
 			spoor.setTrack(mijnsequencer.getSequence().createTrack());
-			spoor.stappenuitzetten();
+			spoor.stappenUitzetten();
 		}
 
 		// sequencer opnieuw opbouwen
@@ -73,7 +73,7 @@ public class Project implements Serializable {
 
 	}
 
-	public boolean bpminstellen(float bpm) {
+	public boolean tempoBepalen(float bpm) {
 		int maxbpm = 420;
 		int minbpm = 1;
 		if (bpm > maxbpm || bpm < minbpm) {
@@ -121,13 +121,13 @@ public class Project implements Serializable {
 
 	}
 
-	public void allesladen(Project geladenproject) {
-		allesporenleegmaken();
+	public void gelaadProjectToepassen(Project geladenproject) {
+		alleSporenLeegmaken();
 		this.naam = geladenproject.naam;
 		this.bpm = geladenproject.bpm;
 		this.sporen = geladenproject.sporen;
 		System.out.println(this.getNaam());
-		bpminstellen(this.bpm);
+		tempoBepalen(this.bpm);
 
 	}
 

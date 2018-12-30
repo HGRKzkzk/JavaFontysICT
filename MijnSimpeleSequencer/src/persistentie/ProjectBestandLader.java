@@ -64,7 +64,7 @@ public class ProjectBestandLader {
 		// }
 
 		// de geladen data toepassen
-		project.allesladen(geladenproject);
+		project.gelaadProjectToepassen(geladenproject);
 	}
 
 }

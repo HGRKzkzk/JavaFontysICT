@@ -29,7 +29,7 @@ public abstract class Spoor implements Serializable {
 
 	}
 
-	public void stappenuitzetten() {
+	public void stappenUitzetten() {
 		for (Stap stap : stappen) {
 
 			stap.uitzetten();
