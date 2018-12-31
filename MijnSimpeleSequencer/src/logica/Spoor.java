@@ -10,7 +10,6 @@ import javax.sound.midi.Track;
 public abstract class Spoor implements Serializable {
 
 	private String omschrijving;
-
 	private int kanaalnummer;
 	private int instrument;
 	private String naam;

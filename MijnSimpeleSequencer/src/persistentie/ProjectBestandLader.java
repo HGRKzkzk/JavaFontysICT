@@ -45,25 +45,7 @@ public class ProjectBestandLader {
 			}
 
 		}
-
-		// //de in het project aanwezige transients ondervangen
-		// Sequence sequence = mijnsequencer.getSequence();
-		// geladenproject.setMijnsequencer(mijnsequencer);
-		// for (Spoor spoor : geladenproject.getSporen()) {
-		// spoor.setTrack(sequence.createTrack());
-		// }
-		//
-
-		// ter controle de eigenschapen van het net geladen project weergeven:
-		// System.out.println(geladenproject.getNaam());
-		// System.out.println(geladenproject.getMijnsequencer());
-
-		// for (Spoor spoor : geladenproject.getSporen()) {
-		//
-		// System.out.println(spoor.getNaam());
-		// }
-
-		// de geladen data toepassen
+		
 		project.geladenProjectToepassen(geladenproject);
 	}
 

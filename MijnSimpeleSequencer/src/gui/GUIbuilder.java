@@ -6,6 +6,7 @@ import java.io.InvalidClassException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -22,11 +23,14 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import logica.Drumspoor;
 import logica.Project;
 import logica.Spoor;
 import logica.Stap;
+import logica.midiDrums;
 import persistentie.ProjectBestandLader;
 import persistentie.ProjectBestandSchrijver;
 
@@ -38,6 +42,11 @@ public class GUIbuilder {
 	private ProjectBestandSchrijver BestandSchrijver;
 	private ProjectBestandLader BestandLader;
 
+	
+	
+	
+	private final int fontsize = 10; 
+	
 	// Vaker gebruikte stijl-definities
 	private final Border randaan = new Border(
 			new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT));
@@ -45,12 +54,15 @@ public class GUIbuilder {
 			new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY, BorderWidths.DEFAULT));
 
 	// Positionering en styling van het sequencer blok
-	private final int sequebcerhorizontaal = 30; // px
+	private final int sequencerhorizontaal = 30; // px
 	private final int sequencerverticaal = 93; // px
 	private final int hoogtetussenrijen = 33; // px
 	private final int horizontaleafstandtussenstappen = 40; // px
 	private final int aftsandvanknoptovlabels = 125; // px
 	private int btnx;
+	
+	private String stapknopstyle = "-fx-background-color: transparent;";
+	private String stapknopmarkerstyle = "-fx-background-color: white;";
 	// einde sequencerblok
 
 	// Positionering en styling startknop
@@ -74,6 +86,7 @@ public class GUIbuilder {
 	
 	private final String bestandOmschrijving = "WSB projecten (*.wsb)";
 	private final String bestandExtensie = "*.wsb";
+	private FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(bestandOmschrijving, bestandExtensie);
 
 	// einde menubalk
 
@@ -99,6 +112,85 @@ public class GUIbuilder {
 	}
 
 	public void menubalkMaken() {
+		
+		knopBestandOpslaanMaken();
+		knopBestandLadenMaken();	
+		knopOpslaanNaarMidiMaken();
+
+		
+		Button info = new Button("info");
+		info.setTranslateX(menubalkxpos + 933);
+		info.setStyle("-fx-background-color: transparent;");
+		root.getChildren().add(info);
+
+	}
+	
+	
+	private void knopBestandLadenMaken() {
+		
+		// Knop laden
+				Button laden = new Button(labelOpenen);
+				laden.setTranslateX(menubalkxpos);
+				laden.setStyle("-fx-background-color: transparent;");
+				root.getChildren().add(laden);
+
+				final FileChooser fileChooser2 = new FileChooser();
+				fileChooser2.getExtensionFilters().add(extFilter);
+
+				laden.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent e) {
+						File file = fileChooser2.showOpenDialog(null);
+						if (file != null) {
+							try {
+
+								BestandLader.projectLadenVanuitSerializedData(file);
+
+							} catch (InvalidClassException e1) {
+
+								Alert alert = new Alert(AlertType.INFORMATION);
+								alert.setHeaderText(null);
+								alert.setGraphic(null);
+								alert.setTitle("Kan bestand niet openen");
+								String s = "Het gekozen bestand is niet compatibel met de versie van HGRKzkzkboxx die je gebruikt, of het is corrupt.";
+								alert.setContentText(s);
+								alert.show();
+
+							}
+
+							catch (FileNotFoundException e1) {
+
+								Alert alert = new Alert(AlertType.INFORMATION);
+								alert.setHeaderText(null);
+								alert.setGraphic(null);
+								alert.setTitle("Bestand niet gevonden");
+								String s = "Het opgegeven bestand kon niet gevonden worden.";
+								alert.setContentText(s);
+								alert.show();
+
+								e1.printStackTrace();
+							} catch (ClassNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+						}
+
+						GUIopnieuwbouwen();
+
+					}
+				});
+
+		
+		
+		
+	}
+	
+	
+	
+	private void knopBestandOpslaanMaken() {
+		
+		
 
 		// Knop opslaan
 		Button opslaan = new Button(labelOpslaan);
@@ -121,89 +213,40 @@ public class GUIbuilder {
 			}
 		});
 
-		// Knop laden
-		Button laden = new Button(labelOpenen);
-		laden.setTranslateX(menubalkxpos);
-		laden.setStyle("-fx-background-color: transparent;");
-		root.getChildren().add(laden);
 
-		final FileChooser fileChooser2 = new FileChooser();
-		fileChooser2.getExtensionFilters().add(extFilter);
-
-		laden.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent e) {
-				File file = fileChooser2.showOpenDialog(null);
-				if (file != null) {
-					try {
-
-						BestandLader.projectLadenVanuitSerializedData(file);
-
-					} catch (InvalidClassException e1) {
-
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setHeaderText(null);
-						alert.setGraphic(null);
-						alert.setTitle("Kan bestand niet openen");
-						String s = "Het gekozen bestand is niet compatibel met de versie van HGRKzkzkboxx die je gebruikt, of het is corrupt.";
-						alert.setContentText(s);
-						alert.show();
-
-					}
-
-					catch (FileNotFoundException e1) {
-
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setHeaderText(null);
-						alert.setGraphic(null);
-						alert.setTitle("Bestand niet gevonden");
-						String s = "Het opgegeven bestand kon niet gevonden worden.";
-						alert.setContentText(s);
-						alert.show();
-
-						e1.printStackTrace();
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-				}
-
-				GUIopnieuwbouwen();
-
-			}
-		});
-
+		
+		
+	}
+	
+	
+	
+	private void knopOpslaanNaarMidiMaken() {
+		
 		// Knop exporteren naar midi
-		Button midi = new Button("Midi exporteren");
-		midi.setTranslateX(menubalkxpos + 200);
-		midi.setStyle("-fx-background-color: transparent;");
-		root.getChildren().add(midi);
+				Button midi = new Button("Midi exporteren");
+				midi.setTranslateX(menubalkxpos + 200);
+				midi.setStyle("-fx-background-color: transparent;");
+				root.getChildren().add(midi);
 
-		final FileChooser fileChooser3 = new FileChooser();
+				final FileChooser fileChooser3 = new FileChooser();
 
-		FileChooser.ExtensionFilter MIDIextFilter = new FileChooser.ExtensionFilter("MIDI bestanden (*.mid)", "*.mid");
+				FileChooser.ExtensionFilter MIDIextFilter = new FileChooser.ExtensionFilter("MIDI bestanden (*.mid)", "*.mid");
 
-		fileChooser3.getExtensionFilters().add(MIDIextFilter);
+				fileChooser3.getExtensionFilters().add(MIDIextFilter);
 
-		midi.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent e) {
-				File file = fileChooser3.showSaveDialog(null);
-				if (file != null) {
-					BestandSchrijver.projectOpslaanAlsMidiFile(project, file);
-				}
-			}
-		});
-
-		Button info = new Button("info");
-		info.setTranslateX(menubalkxpos + 933);
-		info.setStyle("-fx-background-color: transparent;");
-		root.getChildren().add(info);
+				midi.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(final ActionEvent e) {
+						File file = fileChooser3.showSaveDialog(null);
+						if (file != null) {
+							BestandSchrijver.projectOpslaanAlsMidiFile(project, file);
+						}
+					}
+				});
 
 	}
 
-	public void bpmInvoerVeldMaken() {
+	private void bpmInvoerVeldMaken() {
 
 		TextField bpmveld = new TextField();
 		String bpm = String.valueOf(project.getMijnsequencer().getSequencer().getTempoInBPM());
@@ -228,7 +271,7 @@ public class GUIbuilder {
 
 	}
 
-	public void startknopMaken() {
+	private void startknopMaken() {
 
 		Button startknop = new Button();
 		startknop.setTranslateX(startknophorizontaal);
@@ -255,35 +298,63 @@ public class GUIbuilder {
 
 	}
 
-	public void sequencerMaken() {
+	private void sequencerMaken() {
 
 		int mijnypos = sequencerverticaal;
-
 		String stapAan = "aan";
 		String stapUit = "aan";
-
-		for (Spoor spoor : project.getSporen()) {
+		
+		// het drum gedeelte
+		for (Spoor Drumspoor : project.getSporen()) {
 
 			btnx = 0;
-			Label spoorlabel = new Label(spoor.getNaam());
-			Label instrumentlabel = new Label(spoor.getOmschrijving());
+			Label spoorlabel = new Label(Drumspoor.getNaam());
+			Button instrumentlabel = new Button(Drumspoor.getOmschrijving());
+			instrumentlabel.setStyle("-fx-background-color: transparent;");
+			instrumentlabel.setTextAlignment(TextAlignment.LEFT);
+			
+					
+			
 
-			spoorlabel.setTranslateX(sequebcerhorizontaal);
+			spoorlabel.setTranslateX(sequencerhorizontaal);
 			spoorlabel.setTranslateY(mijnypos);
-
-			instrumentlabel.setTranslateX(spoorlabel.getTranslateX());
+			instrumentlabel.setTranslateX(spoorlabel.getTranslateX() - 7);
 			instrumentlabel.setTranslateY(spoorlabel.getTranslateY() + 12);
-			instrumentlabel.setFont(new Font(10));
+			instrumentlabel.setFont(new Font(fontsize));
+			
+			instrumentlabel.setTextAlignment(TextAlignment.LEFT);
+			
+			
+			// om het instrument te veranderen (nog aan te passen) 
+			instrumentlabel.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+				
+					
+					
+					
+				}
+				
+				
+			});
+			
+			
+			
+			
+			
+			
+			
 
 			mijnypos += hoogtetussenrijen;
 			root.getChildren().add(spoorlabel);
 			root.getChildren().add(instrumentlabel);
 
-			for (Stap stap : spoor.getStappen()) {
+			for (Stap stap : Drumspoor.getStappen()) {
 
 				Button stapknop = new Button();
 				stapknop.setId("stap");
-				stapknop.setStyle("-fx-background-color: transparent;");
+				stapknop.setStyle(stapknopstyle);
 				stapknop.setTextFill(null);
 				if (stap.maakIkGeluid()) {
 					stapknop.setText(stapAan);
@@ -313,9 +384,9 @@ public class GUIbuilder {
 							stapknop.setBorder(randuit);
 
 							if (stap.getMijnplek() == 1 || (stap.getMijnplek() - 1) % 4 == 0) {
-								stapknop.setStyle(stapknop.getStyle() + "-fx-background-color: white;");
+								stapknop.setStyle(stapknop.getStyle() + stapknopmarkerstyle);
 							} else {
-								stapknop.setStyle("-fx-background-color: transparent;");
+								stapknop.setStyle(stapknopstyle);
 							}
 
 							stapknop.setText(stapUit);
@@ -343,6 +414,7 @@ public class GUIbuilder {
 			public void handle(ActionEvent e) {
 
 				project.alleSporenLeegmaken();
+				
 
 				for (Node node : root.getChildren()) {
 					if (node instanceof Button && node.getId() == "stap") {
@@ -360,7 +432,7 @@ public class GUIbuilder {
 		primaryStage.setTitle("HGRKzkzkboxx - " + project.getNaam());
 	}
 
-	public void GUIopnieuwbouwen() {
+	private void GUIopnieuwbouwen() {
 		root.getChildren().clear();
 		maakmijnGUI();
 	}

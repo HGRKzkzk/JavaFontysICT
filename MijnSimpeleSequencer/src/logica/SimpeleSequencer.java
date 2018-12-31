@@ -11,7 +11,7 @@ import javax.sound.midi.Sequencer;
 @SuppressWarnings("serial")
 public class SimpeleSequencer implements Serializable {
 
-	String foutmelding;
+	
 	private transient Sequencer sequencer;
 	private transient Sequence sequence;
 

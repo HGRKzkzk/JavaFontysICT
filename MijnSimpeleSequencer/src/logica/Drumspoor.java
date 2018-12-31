@@ -57,6 +57,9 @@ public class Drumspoor extends Spoor implements Serializable {
 
 	public void setInstrument(int instrument) {
 		this.instrument = instrument;
-	}
+		
+		}
+
+	
 
 }

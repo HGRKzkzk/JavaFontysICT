@@ -59,13 +59,20 @@ public class Project implements Serializable {
 		}
 
 	}
-
-	public void alleSporenLeegmaken() {
-
+	
+	public void alleTracksVernieuwen() {
+		
 		for (Spoor spoor : sporen) {
 			mijnsequencer.getSequence().deleteTrack(spoor.getTrack());
 			spoor.setTrack(mijnsequencer.getSequence().createTrack());
-			spoor.stappenUitzetten();
+		}
+		
+	}
+
+	public void alleSporenLeegmaken() {
+		
+		for (Spoor spoor : sporen) {
+		spoor.stappenUitzetten();
 		}
 
 		// sequencer opnieuw opbouwen
@@ -91,10 +98,7 @@ public class Project implements Serializable {
 	public void afspelen() {
 
 		// dit is nodig om dubbele playback te voorkomen
-		for (Spoor spoor : sporen) {
-			mijnsequencer.getSequence().deleteTrack(spoor.getTrack());
-			spoor.setTrack(mijnsequencer.getSequence().createTrack());
-		}
+		alleTracksVernieuwen();
 
 		// sequence opbouwen
 		sporenDoorlopen();
