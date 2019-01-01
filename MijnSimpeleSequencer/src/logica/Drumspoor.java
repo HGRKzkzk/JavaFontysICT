@@ -5,16 +5,17 @@ import java.util.ArrayList;
 
 import javax.sound.midi.Sequence;
 
-@SuppressWarnings("serial")
-public class Drumspoor extends Spoor implements Serializable {
 
-	private int drumkanaal = 9;
-	private int instrument;
+public class Drumspoor extends Spoor implements Serializable {
+	private static final long serialVersionUID = 7976856862495514977L;
+	
+	private int kanaalnummer = 9;
+	
 
 	public Drumspoor(ArrayList<Spoor> sporen, int nummer, Sequence sequence) {
 		super(sporen, nummer, sequence);
 		super.setNaam("Drumspoor" + nummer);
-		super.setKanaalnummer(drumkanaal);
+		super.setKanaalnummer(kanaalnummer);
 
 		switch (nummer + 1) {
 
@@ -51,14 +52,7 @@ public class Drumspoor extends Spoor implements Serializable {
 
 	}
 
-	public int getInstrument() {
-		return instrument;
-	}
 
-	public void setInstrument(int instrument) {
-		this.instrument = instrument;
-		
-		}
 
 	
 

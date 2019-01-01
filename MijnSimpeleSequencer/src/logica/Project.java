@@ -5,9 +5,21 @@ import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-@SuppressWarnings("serial")
-public class Project implements Serializable {
 
+/** 
+ * De Project klasse is een belangrijk aanmaakpunt van de andere onderdelen van de applicatie 
+ * en ook het punt waarop deze onderdelen samengevoegd worden om af te spelen.
+ * De klasse draagt zorg voor het aanmaken van het juiste aantal te gebruiken sporen,
+ * en biedt de mogelijkheid om deze sporen vervolgens in de sequencer te laden en af te spelen.
+ * 
+ *   @author Wouter */
+
+ 
+
+
+public class Project implements Serializable {
+	private static final long serialVersionUID = 3540137627950242539L;
+	
 	private transient SimpeleSequencer mijnsequencer;
 	private String naam;
 	private int bpm;
@@ -40,17 +52,18 @@ public class Project implements Serializable {
 		int volume;
 		int positie;
 		int midicommand;
-
-		// van ieder spoor..
-		for (Spoor spoor : sporen) {
-			midikanaal = spoor.getKanaalnummer();
-
-			// ..iedere stap langsgaan
-			for (Stap stap : spoor.getStappen()) {
-				volume = stap.getVolume();
-				positie = stap.getMijnplek();
-				midicommand = stap.getMidicommand();	
-				spoor.getTrack().add(midiHelpers.midiEvent(midicommand, midikanaal, spoor.getInstrument(), volume, positie));
+		int instrument;
+		
+			for (Spoor spoor : sporen) {
+				midikanaal = spoor.getKanaalnummer();
+				instrument = spoor.getInstrument();
+				
+				for (Stap stap : spoor.getStappen()) {
+					volume = stap.getVolume();
+					positie = stap.getMijnplek();
+					midicommand = stap.getMidicommand();	
+					
+					spoor.getTrack().add(midiHelpers.midiEvent(midicommand, midikanaal, instrument, volume, positie));
 
 				
 

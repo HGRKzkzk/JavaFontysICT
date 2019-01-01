@@ -1,10 +1,18 @@
 package logica;
 
 import java.io.Serializable;
+
+/**
+ * De klasse Stap omvat van iedere stap hun plek, volume en de informatie of de betreffende stap aan of  
+ * uit staat, en of deze dus in de sequencer wel of niet een geluid voort moet brengen. 
+ * 
+ */
+
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
+
 public class Stap implements Serializable {
+	private static final long serialVersionUID = 5372151320352886645L;
 	
 	private int mijnplek;
 	private int volume;

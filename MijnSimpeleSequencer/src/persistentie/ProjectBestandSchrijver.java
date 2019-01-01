@@ -12,6 +12,7 @@ public class ProjectBestandSchrijver implements IkKanProjectBestandenOpslaan {
 
 	Project project;
 
+	@Override
 	public void projectOpslaanAlsSerializedData(Project project, File file) {
 
 		String naam = project.getNaam();
@@ -52,6 +53,7 @@ public class ProjectBestandSchrijver implements IkKanProjectBestandenOpslaan {
 
 	}
 
+	@Override
 	public void projectOpslaanAlsMidiFile(Project project, File file) {
 
 		if (project.getMijnsequencer().getSequence().getTracks().length == 0) {

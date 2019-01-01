@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 import javax.sound.midi.Sequence;
 
-@SuppressWarnings("serial")
-public class Synthspoor extends Spoor implements Serializable {
 
+public class Synthspoor extends Spoor implements Serializable {
+	private static final long serialVersionUID = -4934440651751884847L;
+	
 	private int instrument;
 	private String omschrijving;
 

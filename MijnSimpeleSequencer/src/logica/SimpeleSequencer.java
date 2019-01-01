@@ -8,9 +8,9 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 
-@SuppressWarnings("serial")
-public class SimpeleSequencer implements Serializable {
 
+public class SimpeleSequencer implements Serializable {
+	private static final long serialVersionUID = 6702857710611810142L;
 	
 	private transient Sequencer sequencer;
 	private transient Sequence sequence;
@@ -27,6 +27,7 @@ public class SimpeleSequencer implements Serializable {
 
 		this.sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
 		this.sequencer.setMasterSyncMode(null);
+		
 
 		try {
 			this.sequence = new Sequence(Sequence.PPQ, 4);

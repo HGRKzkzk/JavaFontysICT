@@ -6,7 +6,6 @@ import java.io.InvalidClassException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -26,11 +25,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import logica.Drumspoor;
 import logica.Project;
 import logica.Spoor;
 import logica.Stap;
-import logica.midiDrums;
 import persistentie.ProjectBestandLader;
 import persistentie.ProjectBestandSchrijver;
 
@@ -99,19 +96,32 @@ public class GUIbuilder {
 		BestandLader = new ProjectBestandLader(project);
 
 		maakmijnGUI();
+		
+		// onderdelenGUIWeergeven();
 
 	}
+	
+	
 
 	private void maakmijnGUI() {
-
+		
 		sequencerMaken();
 		bpmInvoerVeldMaken();
 		menubalkMaken();
 		startknopMaken();
 
 	}
+	
+	private void onderdelenGUIWeergeven() {
+		Object[] bla = root.getChildren().toArray();
+		for (Object iets : bla) {
+			System.out.println(iets);
+			
+		}
+		
+	}
 
-	public void menubalkMaken() {
+	private void menubalkMaken() {
 		
 		knopBestandOpslaanMaken();
 		knopBestandLadenMaken();	
@@ -281,11 +291,11 @@ public class GUIbuilder {
 		startknop.setStyle(startknop.getStyle() + "-fx-font-weight: bold;");
 
 		root.getChildren().add(startknop);
-
+		
 		startknop.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-
+				
 				if (startknop.getText().equals(afspelen)) {
 					startknop.setText(stoppen);
 				} else {
@@ -309,7 +319,7 @@ public class GUIbuilder {
 
 			btnx = 0;
 			Label spoorlabel = new Label(Drumspoor.getNaam());
-			Button instrumentlabel = new Button(Drumspoor.getOmschrijving());
+			Label instrumentlabel = new Label(Drumspoor.getOmschrijving());
 			instrumentlabel.setStyle("-fx-background-color: transparent;");
 			instrumentlabel.setTextAlignment(TextAlignment.LEFT);
 			
@@ -318,28 +328,13 @@ public class GUIbuilder {
 
 			spoorlabel.setTranslateX(sequencerhorizontaal);
 			spoorlabel.setTranslateY(mijnypos);
-			instrumentlabel.setTranslateX(spoorlabel.getTranslateX() - 7);
+			instrumentlabel.setTranslateX(spoorlabel.getTranslateX() + 0 );
 			instrumentlabel.setTranslateY(spoorlabel.getTranslateY() + 12);
 			instrumentlabel.setFont(new Font(fontsize));
 			
 			instrumentlabel.setTextAlignment(TextAlignment.LEFT);
 			
-			
-			// om het instrument te veranderen (nog aan te passen) 
-			instrumentlabel.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-				
-					
-					
-					
-				}
-				
-				
-			});
-			
-			
+						
 			
 			
 			
@@ -369,6 +364,8 @@ public class GUIbuilder {
 					stapknop.setStyle(stapknop.getStyle() + "-fx-background-color: white;");
 
 				}
+				
+		
 
 				stapknop.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
