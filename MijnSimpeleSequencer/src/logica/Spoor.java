@@ -6,24 +6,23 @@ import java.util.ArrayList;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Track;
 
-/** 
- * De abstratce klasse Spoor is de basis voor Drumspoor en Synthspoor en is verantwoordelijk
- * voor de in de sequencer te laden tracks en de onderverdeling hiervan in een x-aantal Stappen. 
- * De informatie die op Spoor-niveau wordt opgeslagen is ook verantwoordelijk voor het bepalen
- * van de instrumenten die gebruikt worden.* 
+/**
+ * De abstratce klasse Spoor is de basis voor Drumspoor en Synthspoor en is
+ * verantwoordelijk voor de in de sequencer te laden tracks en de onderverdeling
+ * hiervan in een x-aantal Stappen. De informatie die op Spoor-niveau wordt
+ * opgeslagen is ook verantwoordelijk voor het bepalen van de instrumenten die
+ * gebruikt worden.*
  */
-
-
 
 public abstract class Spoor implements Serializable {
 	private static final long serialVersionUID = 2449129869558050215L;
-	
+
 	private String naam;
 	private String omschrijving;
 	private int kanaalnummer;
-	
+
 	private int instrument;
-	
+
 	private int aantalstappen = 16;
 	private transient Track track;
 	private ArrayList<Stap> stappen = new ArrayList<Stap>();

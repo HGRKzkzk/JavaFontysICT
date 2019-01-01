@@ -32,7 +32,7 @@ public class Stap implements Serializable {
 
 	}
 
-	public void aanuit() {
+	public void aanuit(int volume) {
 
 		if (maakIkGeluid) {
 			maakIkGeluid = false;
@@ -41,6 +41,8 @@ public class Stap implements Serializable {
 			maakIkGeluid = true;
 			midicommand = 144;
 		}
+		
+		this.volume = volume;
 	
 		
 

@@ -5,28 +5,22 @@ import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-
-/** 
- * De Project klasse is een belangrijk aanmaakpunt van de andere onderdelen van de applicatie 
- * en ook het punt waarop deze onderdelen samengevoegd worden om af te spelen.
- * De klasse draagt zorg voor het aanmaken van het juiste aantal te gebruiken sporen,
- * en biedt de mogelijkheid om deze sporen vervolgens in de sequencer te laden en af te spelen.
+/**
+ * De Project klasse is een belangrijk aanmaakpunt van de andere onderdelen van
+ * de applicatie en ook het punt waarop deze onderdelen samengevoegd worden om
+ * af te spelen. De klasse draagt zorg voor het aanmaken van het juiste aantal
+ * te gebruiken sporen, en biedt de mogelijkheid om deze sporen vervolgens in de
+ * sequencer te laden en af te spelen.
  * 
  */
 
- 
-
-
 public class Project implements Serializable {
 	private static final long serialVersionUID = 3540137627950242539L;
-	
+
 	private transient SimpeleSequencer mijnsequencer;
 	private String naam;
 	private int bpm;
 	ArrayList<Spoor> sporen = new ArrayList<Spoor>();
-	
-	
-								
 
 	@SuppressWarnings("unused")
 	public Project(String naam, int bpm, int aantaldrumsporen, int aantalsynthsporen, SimpeleSequencer seq) {
@@ -53,68 +47,67 @@ public class Project implements Serializable {
 		int positie;
 		int midicommand;
 		int instrument;
-		
-			for (Spoor spoor : sporen) {
-				midikanaal = spoor.getKanaalnummer();
-				instrument = spoor.getInstrument();
-				
-				for (Stap stap : spoor.getStappen()) {
-					volume = stap.getVolume();
-					positie = stap.getMijnplek();
-					midicommand = stap.getMidicommand();	
-					
-					spoor.getTrack().add(midiHelpers.midiEvent(midicommand, midikanaal, instrument, volume, positie));
 
-				
+		for (Spoor spoor : sporen) {
+			midikanaal = spoor.getKanaalnummer();
+			instrument = spoor.getInstrument();
+
+			for (Stap stap : spoor.getStappen()) {
+				volume = stap.getVolume();
+				positie = stap.getMijnplek();
+				midicommand = stap.getMidicommand();
+
+				spoor.getTrack().add(midiHelpers.midiEvent(midicommand, midikanaal, instrument, volume, positie));
 
 			}
 
 		}
 
 	}
-	
+
 	/**
-	 * Deze methode verwijderd alle Tracks in de verzameling sporen, en maakt ze opnieuw aan, 
-	 * om te voorkomen dat MIDI-data overelkaar geschreven wordt en voor dubbele playback zou
-	 * zorgen.
+	 * Deze methode verwijdert alle Tracks in de verzameling sporen, en maakt ze
+	 * opnieuw aan, om te voorkomen dat MIDI-data overelkaar geschreven wordt en
+	 * voor dubbele playback zou zorgen.
 	 */
-	
+
 	public void alleTracksVernieuwen() {
-		
+
 		for (Spoor spoor : sporen) {
 			mijnsequencer.getSequence().deleteTrack(spoor.getTrack());
 			spoor.setTrack(mijnsequencer.getSequence().createTrack());
 		}
-		
+
 	}
-	
+
 	/**
-	 * De methode alleSporenLeegMaken zorgt ervoor dat alle Stappen in een Spoor "uit" worden gezet, dat wil zeggen dat ze
-	 * een status krijgen waaraan geen MIDI-output verbonden is. 
+	 * De methode alleSporenLeegMaken zorgt ervoor dat alle Stappen in een Spoor
+	 * "uit" worden gezet, dat wil zeggen dat ze een status krijgen waaraan geen
+	 * MIDI-output verbonden is.
 	 */
 
 	public void alleSporenLeegmaken() {
-		
+
 		for (Spoor spoor : sporen) {
-		spoor.stappenUitzetten();
+			spoor.stappenUitzetten();
 		}
 
 		// sequencer opnieuw opbouwen
 		sporenBouwen();
 
 	}
-	
+
 	/**
-	 * tempoInstellen wordt gebruikt om het afspeeltempo in te stellen op 
-	 * Project niveau, en dit door te zetten naar de Sequencer.  
+	 * tempoInstellen wordt gebruikt om het afspeeltempo in te stellen op Project
+	 * niveau, en dit door te zetten naar de Sequencer.
 	 * 
-	 * @param bpm	Het opgegeven tempo in beats per minute 
-	 * @return		True als het tempo kon worden aangepast,
-	 * 				False als het tempo buiten de gestelde
-	 * 				randwaarden valt. 
+	 * @param bpm
+	 *            Het opgegeven tempo in beats per minute
+	 * @return True als het tempo kon worden aangepast, False als het tempo buiten
+	 *         de gestelde randwaarden valt.
 	 */
 
-	public boolean tempoInstellen (float bpm) {
+	public boolean tempoInstellen(float bpm) {
 		int maxbpm = 420;
 		int minbpm = 1;
 		if (bpm > maxbpm || bpm < minbpm) {
@@ -130,12 +123,14 @@ public class Project implements Serializable {
 	}
 
 	/**
-	 * Methode om de informatie in de verschillende sporen naar MIDI-data om te zetten en af te spelen. 
-	 * Roept eerst alleTrackVernieuwen aan omdat er anders MIDI-noten opelkaar gestapeld zouden worden, 
-	 * vervolgens worden op basis van de ingegeven data nieuwe tracks in de sequencer geladen. 
-	 * Daarna worden deze afgespeeld. Als de sequencer al aan het afspelen is, stopt het afspelen.
+	 * Methode om de informatie in de verschillende sporen naar MIDI-data om te
+	 * zetten en af te spelen. Roept eerst alleTrackVernieuwen aan omdat er anders
+	 * MIDI-noten opelkaar gestapeld zouden worden, vervolgens worden op basis van
+	 * de ingegeven data nieuwe tracks in de sequencer geladen. Daarna worden deze
+	 * afgespeeld. Als de sequencer al aan het afspelen is, stopt het afspelen.
 	 * 
-	 * @return  true als de Sequencer is begonnen met afspelen, false als de Sequencer is gestopt met afspelen.
+	 * @return true als de Sequencer is begonnen met afspelen. false als de
+	 *         Sequencer is gestopt met afspelen.
 	 */
 	public boolean afspelen() {
 
@@ -182,8 +177,6 @@ public class Project implements Serializable {
 	public void setNaam(String naam) {
 		this.naam = naam;
 	}
-
-	
 
 	public ArrayList<Spoor> getSporen() {
 		return sporen;

@@ -16,7 +16,10 @@ import javax.sound.midi.Sequencer;
   */
 
 
+
 public class SimpeleSequencer implements Serializable {
+
+	
 	private static final long serialVersionUID = 6702857710611810142L;
 	
 	private transient Sequencer sequencer;
@@ -44,6 +47,11 @@ public class SimpeleSequencer implements Serializable {
 		}
 
 	}
+	
+	/**
+	 * Methode om het tempo in beats per minute in de Sequencer aan te passen. 
+	 * @param bpm	Het tempo in beats per minute.
+	 */
 
 	public void setSequencerBPM(int bpm) {
 		this.sequencer.setTempoInBPM(bpm);

@@ -35,7 +35,7 @@ import logica.Spoor;
 import logica.Stap;
 import persistentie.ProjectBestandLader;
 import persistentie.ProjectBestandSchrijver;
-
+ 
 public class GUIbuilder {
 
 	private Pane root;
@@ -47,6 +47,17 @@ public class GUIbuilder {
 	private final int	horizontaleresolutie = 880;
 	private final int 	verticaleresolutie = 640;
 	
+	private final int laagvolume = 40;
+	private final int middenvolume = 90;
+	private final int hoogvolume = 127;
+	
+	private int tegebruikenvolume = middenvolume;
+	
+	double i = 0.4;
+
+
+
+	String stapkleur = "-fx-background-color: rgb(142, 185, 255," + i  + ")"; 
 	
 	
 	private final int fontsize = 10; 
@@ -93,7 +104,11 @@ public class GUIbuilder {
 	private FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(bestandOmschrijving, bestandExtensie);
 
 	// einde menubalk
+	
+	
+	
 
+	
 	public GUIbuilder(Pane root, Project project, Stage primaryStage) {
 
 		this.root = root;
@@ -103,6 +118,7 @@ public class GUIbuilder {
 		BestandLader = new ProjectBestandLader(project);
 
 		maakmijnGUI();
+		
 		
 		// onderdelenGUIWeergeven();
 
@@ -146,6 +162,25 @@ public class GUIbuilder {
 		info.setStyle("-fx-background-color: transparent;");
 		root.getChildren().add(info);
 
+	}
+	
+	public double transp(int tgv) {
+		
+		switch (tgv) {
+		case hoogvolume: return 0.8; 
+			
+		case middenvolume: return 0.4;
+			
+		case laagvolume: return 0.2;
+			
+			default: return 0.3;
+			
+		
+		}
+		
+		
+		
+		
 	}
 	
 	
@@ -377,12 +412,15 @@ public class GUIbuilder {
 				stapknop.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent e) {
-						stap.aanuit();
+						
+						stap.aanuit(tegebruikenvolume);
 
 						if (stap.maakIkGeluid()) {
 
 							stapknop.setBorder(randaan);
 							stapknop.setText(stapAan);
+							stapknop.setStyle(stapknop.getStyle() + stapkleur);
+							
 
 						} else {
 							stapknop.setBorder(randuit);
@@ -489,16 +527,23 @@ public class GUIbuilder {
 	        	
 	        	  switch (event.getCode()) {
 	        	  case Z :
-	        		  laagVolume.requestFocus();
 	        		  laagVolume.setSelected(true);
+	        		  tegebruikenvolume = laagvolume;
+	        		  i = transp(tegebruikenvolume);
+	        		// rgb(142, 185, 255)
+	        		  stapkleur = "-fx-background-color: rgb(142, 185, 255," + i  + ")";
 	        		  break;
 	        	  case X  :
-	        		  middenVolume.requestFocus();
 	        		  middenVolume.setSelected(true);
+	        		  tegebruikenvolume = middenvolume;
+	        		  i = transp(tegebruikenvolume);
+	        		  stapkleur = "-fx-background-color: rgb(142, 185, 255," + i  + ")";
 	        		  break;
 	        	  case C :
-	        		  hoogVolume.requestFocus();
 	        		  hoogVolume.setSelected(true);
+	        		  tegebruikenvolume = hoogvolume;
+	        		  i = transp(tegebruikenvolume);
+	        		  stapkleur = "-fx-background-color: rgb(142, 185, 255," + i  + ")";
 				default:
 					break;
 	        	  }
