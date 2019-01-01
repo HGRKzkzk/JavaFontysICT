@@ -63,7 +63,7 @@ public class ProjectBestandSchrijver implements IkKanProjectBestandenOpslaan {
 
 		// File f = new File(naam + ".mid");
 		try {
-			project.sporenDoorlopen();
+			project.sporenBouwen();
 			MidiSystem.write(project.getMijnsequencer().getSequence(), 1, file);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

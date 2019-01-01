@@ -46,7 +46,7 @@ public class Project implements Serializable {
 
 	}
 
-	public void sporenDoorlopen() {
+	public void sporenBouwen() {
 
 		int midikanaal;
 		int volume;
@@ -73,6 +73,12 @@ public class Project implements Serializable {
 
 	}
 	
+	/**
+	 * Deze methode verwijderd alle Tracks in de verzameling sporen, en maakt ze opnieuw aan, 
+	 * om te voorkomen dat MIDI-data overelkaar geschreven wordt en voor dubbele playback zou
+	 * zorgen.
+	 */
+	
 	public void alleTracksVernieuwen() {
 		
 		for (Spoor spoor : sporen) {
@@ -81,6 +87,11 @@ public class Project implements Serializable {
 		}
 		
 	}
+	
+	/**
+	 * De methode alleSporenLeegMaken zorgt ervoor dat alle Stappen in een Spoor "uit" worden gezet, dat wil zeggen dat ze
+	 * een status krijgen waaraan geen MIDI-output verbonden is. 
+	 */
 
 	public void alleSporenLeegmaken() {
 		
@@ -89,11 +100,21 @@ public class Project implements Serializable {
 		}
 
 		// sequencer opnieuw opbouwen
-		sporenDoorlopen();
+		sporenBouwen();
 
 	}
+	
+	/**
+	 * tempoInstellen wordt gebruikt om het afspeeltempo in te stellen op 
+	 * Project niveau, en dit door te zetten naar de Sequencer.  
+	 * 
+	 * @param bpm	Het opgegeven tempo in beats per minute 
+	 * @return		True als het tempo kon worden aangepast,
+	 * 				False als het tempo buiten de gestelde
+	 * 				randwaarden valt. 
+	 */
 
-	public boolean tempoBepalen(float bpm) {
+	public boolean tempoInstellen (float bpm) {
 		int maxbpm = 420;
 		int minbpm = 1;
 		if (bpm > maxbpm || bpm < minbpm) {
@@ -108,13 +129,21 @@ public class Project implements Serializable {
 
 	}
 
-	public void afspelen() {
+	/**
+	 * Methode om de informatie in de verschillende sporen naar MIDI-data om te zetten en af te spelen. 
+	 * Roept eerst alleTrackVernieuwen aan omdat er anders MIDI-noten opelkaar gestapeld zouden worden, 
+	 * vervolgens worden op basis van de ingegeven data nieuwe tracks in de sequencer geladen. 
+	 * Daarna worden deze afgespeeld. Als de sequencer al aan het afspelen is, stopt het afspelen.
+	 * 
+	 * @return  true als de Sequencer is begonnen met afspelen, false als de Sequencer is gestopt met afspelen.
+	 */
+	public boolean afspelen() {
 
 		// dit is nodig om dubbele playback te voorkomen
 		alleTracksVernieuwen();
 
 		// sequence opbouwen
-		sporenDoorlopen();
+		sporenBouwen();
 
 		// sequence afspelen
 		if (!mijnsequencer.getSequencer().isRunning()) {
@@ -126,6 +155,7 @@ public class Project implements Serializable {
 				e.printStackTrace();
 			}
 			mijnsequencer.getSequencer().start();
+			return true;
 		}
 
 		// of sequence stoppen
@@ -135,6 +165,7 @@ public class Project implements Serializable {
 			mijnsequencer.getSequencer().setTickPosition(0);
 
 		}
+		return false;
 
 	}
 
@@ -144,7 +175,7 @@ public class Project implements Serializable {
 		this.bpm = geladenproject.bpm;
 		this.sporen = geladenproject.sporen;
 		System.out.println(this.getNaam());
-		tempoBepalen(this.bpm);
+		tempoInstellen(this.bpm);
 
 	}
 

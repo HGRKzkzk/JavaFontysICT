@@ -23,8 +23,8 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
 	
-	int	horizontaleresolutie = 880;
-	int verticaleresolutie = 640; 
+	private final int	horizontaleresolutie = 880;
+	private final int 	verticaleresolutie = 640; 
 	
 	SimpeleSequencer mijnsequencer = new SimpeleSequencer();
 	Project project = new Project("Nieuw project", 120, 6, 0, mijnsequencer);

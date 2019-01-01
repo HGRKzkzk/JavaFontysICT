@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InvalidClassException;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -12,6 +14,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
@@ -39,6 +44,8 @@ public class GUIbuilder {
 	private ProjectBestandSchrijver BestandSchrijver;
 	private ProjectBestandLader BestandLader;
 
+	private final int	horizontaleresolutie = 880;
+	private final int 	verticaleresolutie = 640;
 	
 	
 	
@@ -109,6 +116,12 @@ public class GUIbuilder {
 		bpmInvoerVeldMaken();
 		menubalkMaken();
 		startknopMaken();
+		volumeSwitcherMaken();
+		
+		
+		
+		
+		// onderdelenGUIWeergeven()
 
 	}
 	
@@ -271,7 +284,7 @@ public class GUIbuilder {
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
 					float ingevoerdewaarde = Float.valueOf(bpmveld.getText());
-					project.tempoBepalen(ingevoerdewaarde);
+					project.tempoInstellen(ingevoerdewaarde);
 					System.out.println(project.getMijnsequencer().getSequencer().getTempoInBPM());
 					String nieuwebpm = String.valueOf(project.getMijnsequencer().getSequencer().getTempoInBPM());
 					bpmveld.setText(nieuwebpm);
@@ -295,14 +308,8 @@ public class GUIbuilder {
 		startknop.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
-				if (startknop.getText().equals(afspelen)) {
-					startknop.setText(stoppen);
-				} else {
-					startknop.setText(afspelen);
-				}
-
-				project.afspelen();
+			String afspeelknoplabel = project.afspelen() ? stoppen : afspelen;
+			startknop.setText(afspeelknoplabel);
 			}
 		});
 
@@ -428,6 +435,88 @@ public class GUIbuilder {
 
 		primaryStage.setTitle("HGRKzkzkboxx - " + project.getNaam());
 	}
+	
+	
+	private void volumeSwitcherMaken() {
+	
+        ToggleGroup group = new ToggleGroup(); 
+        
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle,Toggle new_toggle) {
+                System.out.println(group.getSelectedToggle().getUserData());
+            }
+          });
+        
+  
+        
+        ToggleButton laagVolume = new ToggleButton("laag"); 
+    	laagVolume.setTranslateX(startknophorizontaal);
+		laagVolume.setTranslateY(verticaleresolutie - 40);
+		
+		
+        ToggleButton middenVolume = new ToggleButton("midden");
+        middenVolume.setTranslateX(startknophorizontaal + 50);
+        middenVolume.setTranslateY(verticaleresolutie - 40);
+        
+        ToggleButton hoogVolume = new ToggleButton("hoog");
+        hoogVolume.setTranslateX(startknophorizontaal + 120);
+        hoogVolume.setTranslateY(verticaleresolutie - 40);
+        
+        laagVolume.setToggleGroup(group); 
+        middenVolume.setToggleGroup(group); 
+        hoogVolume.setToggleGroup(group);
+        
+        laagVolume.setUserData("laag"); 
+        middenVolume.setUserData("midden");
+        hoogVolume.setUserData("hoog");
+  
+         
+        middenVolume.setSelected(true); 
+  
+        root.getChildren().addAll(laagVolume, middenVolume, hoogVolume); 
+        
+        
+        
+        
+    	
+
+	
+    	
+		root.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			
+	        @Override
+	        public void handle(KeyEvent event) {
+	        	
+	        	  switch (event.getCode()) {
+	        	  case Z :
+	        		  laagVolume.requestFocus();
+	        		  laagVolume.setSelected(true);
+	        		  break;
+	        	  case X  :
+	        		  middenVolume.requestFocus();
+	        		  middenVolume.setSelected(true);
+	        		  break;
+	        	  case C :
+	        		  hoogVolume.requestFocus();
+	        		  hoogVolume.setSelected(true);
+				default:
+					break;
+	        	  }
+	        	
+	            
+	        }
+	    });
+		
+		}
+
+		
+		
+		
+		
+			
+	
+	
+	
 
 	private void GUIopnieuwbouwen() {
 		root.getChildren().clear();
