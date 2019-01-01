@@ -1,12 +1,19 @@
 package logica;
 
 import java.io.Serializable;
-
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
+
+
+/**
+ * SimpeleSequencer bevat de informatie omtrent de Sequencer en Sequence objecten die verantwoordelijk zijn voor het inladen 
+ * en weergeven (afspelen) van MIDI-data en hun basisinstellingen. 
+ * De Project klasse maakt hier vervolgens gebruik van.
+ * 
+  */
 
 
 public class SimpeleSequencer implements Serializable {

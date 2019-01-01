@@ -2,9 +2,6 @@ package logica;
 
 /**
  * De enum midiDrums bevat een vaste lijst van (drum)sintrumenten en hun corresponderende MIDI-waardes.
- * 
- * @author Wouter
- *
  */
 
 

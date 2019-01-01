@@ -11,8 +11,7 @@ import javax.sound.midi.Track;
  * voor de in de sequencer te laden tracks en de onderverdeling hiervan in een x-aantal Stappen. 
  * De informatie die op Spoor-niveau wordt opgeslagen is ook verantwoordelijk voor het bepalen
  * van de instrumenten die gebruikt worden.* 
- * 
- *  @author Wouter  */
+ */
 
 
 

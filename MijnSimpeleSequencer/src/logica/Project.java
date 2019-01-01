@@ -12,7 +12,7 @@ import javax.sound.midi.InvalidMidiDataException;
  * De klasse draagt zorg voor het aanmaken van het juiste aantal te gebruiken sporen,
  * en biedt de mogelijkheid om deze sporen vervolgens in de sequencer te laden en af te spelen.
  * 
- *   @author Wouter */
+ */
 
  
 
