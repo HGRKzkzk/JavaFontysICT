@@ -8,11 +8,16 @@ import java.io.ObjectOutputStream;
 import javax.sound.midi.MidiSystem;
 import logica.Project;
 
-public class ProjectBestandSchrijver implements IkKanProjectBestandenOpslaan {
+/**
+ * De ProjectBestandSchrijver omvat de functionaliteit om bestanden naar schijf weg te schrijven. 
+ * Om later te openen via de methode projectOpslaanAlsSerializedData, of als MIDI bestand om het 
+ * in een ander stuk software te kunnen importeren via projectOpslaanAlsMidiFile.
+ */
+
+public class ProjectBestandSchrijver {
 
 	Project project;
 
-	@Override
 	public void projectOpslaanAlsSerializedData(Project project, File file) {
 
 		String naam = project.getNaam();
@@ -53,7 +58,6 @@ public class ProjectBestandSchrijver implements IkKanProjectBestandenOpslaan {
 
 	}
 
-	@Override
 	public void projectOpslaanAlsMidiFile(Project project, File file) {
 
 		if (project.getMijnsequencer().getSequence().getTracks().length == 0) {

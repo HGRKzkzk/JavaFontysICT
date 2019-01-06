@@ -101,8 +101,7 @@ public class Project implements Serializable {
 	 * tempoInstellen wordt gebruikt om het afspeeltempo in te stellen op Project
 	 * niveau, en dit door te zetten naar de Sequencer.
 	 * 
-	 * @param bpm
-	 *            Het opgegeven tempo in beats per minute
+	 * @param bpm Het opgegeven tempo in beats per minute
 	 * @return True als het tempo kon worden aangepast, False als het tempo buiten
 	 *         de gestelde randwaarden valt.
 	 */

@@ -8,6 +8,11 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import logica.Project;
 
+
+/**
+ * De ProjectBestandLader biedt de mogelijkheid om bestanden die via een ProjectBestandSchrijver zijn opgeslagen
+ * te openen en in het geheugen te laden. 
+ */
 public class ProjectBestandLader {
 
 	Project project;

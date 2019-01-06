@@ -11,6 +11,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
+/**
+ * De klasse Noot van iedere positie in een Spoor de informatie omtrent het wel of niet afspelen 
+ * van een klank, en de functionaliteit om deze status aan te passen. Ook biedt ze de mogelijkheid 
+ * om van iedere positie het volume te bevatten en aan te passen. 
+  */
+
 public class Stap implements Serializable {
 	private static final long serialVersionUID = 5372151320352886645L;
 	

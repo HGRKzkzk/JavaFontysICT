@@ -5,7 +5,12 @@ import java.util.ArrayList;
 
 import javax.sound.midi.Sequence;
 
-
+/**
+ * De Drumspoor klasse omvat de data en functionaliteit die nodig is om drumsporen aan projecten toe te voegen en deze te gebruiken. 
+ * Op basis van hoeveel drumsporen er zijn / worden aangemaakt in een nieuwe project krijgt ieder spoor een instrument en daarmee
+ * samenhangende omschrijving toegewezen. 
+ * 
+ */
 public class Drumspoor extends Spoor implements Serializable {
 	private static final long serialVersionUID = 7976856862495514977L;
 	
